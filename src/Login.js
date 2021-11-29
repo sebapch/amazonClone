@@ -1,19 +1,33 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Login.css";
+import {auth} from './firebase'
 
 function Login() {
-
+    const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+
     const signIn = e => {
         e.preventDefault();
-
         //Firebase LOGIN
+        auth.signInWithEmailAndPassword(email, password).then(auth => {
+          history.push('/')
+        }).catch(error=> alert(error.message))
     }
+
     const register = e => {
         e.preventDefault();
         //Firebase REGISTER
+        auth.createUserWithEmailAndPassword(email, password).then((auth) => {
+          //success creating user and password
+          console.log(auth);
+          if(auth){
+            history.push('/')
+          }
+        })
+        .catch(error=> alert(error.message));
     }
 
   return (

@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
+
 /* eslint-disable default-case */
 export const initialState = {
   basket: [],
+  user: null
 };
 
 //Selector
@@ -26,7 +29,12 @@ const reducer = (state, action) => {
         console.warn('Cant remove this product')
       }
 
-      return {...state, basket: newBasket}
+      return {...state, basket: newBasket};
+      case "SET_USER":
+        return{
+          ...state,
+          user: action.user
+        };
     default:
       return state;
   }
